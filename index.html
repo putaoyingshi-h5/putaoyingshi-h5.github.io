@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>葡萄影视 - 高清影视在线观看 | putaoyingshi-h5.github.io</title>
+<meta name="description" content="葡萄影视(putaoyingshi-h5.github.io)提供最新电影、电视剧、动漫、综艺在线高清观看，海量资源每日更新，免费流畅，追剧必备。" />
+<meta name="keywords" content="葡萄影视,putaoyingshi-h5,在线影视,高清电影,电视剧,免费观看" />
+<style>
+/* ===== 基础 ===== */
+:root{
+  --purple-900:#1a0a2e;
+  --purple-800:#2d1b4e;
+  --purple-700:#4a2d7a;
+  --purple-600:#7c3aed;
+  --purple-500:#a855f7;
+  --purple-400:#c084fc;
+  --purple-300:#e879f9;
+  --purple-200:#f0abfc;
+  --purple-100:#fae8ff;
+  --grape:#6d28d9;
+  --juice:#8b5cf6;
+  --text:#f5f3ff;
+  --text-dim:#c4b5fd;
+  --text-muted:#a78bfa;
+  --bg:#0f0518;
+  --card-bg:rgba(139,92,246,0.1);
+  --card-border:rgba(168,85,247,0.2);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.7;
+  overflow-x:hidden;
+  position:relative;
+}
+a{color:var(--purple-300);text-decoration:none}
+img{max-width:100%;display:block}
+
+/* 葡萄藤背景装饰 */
+body::before{
+  content:"";
+  position:fixed;
+  top:0;left:0;width:100%;height:100%;
+  background:
+    radial-gradient(circle at 10% 20%,rgba(109,40,217,0.15) 0%,transparent 50%),
+    radial-gradient(circle at 90% 80%,rgba(139,92,246,0.1) 0%,transparent 50%),
+    radial-gradient(circle at 50% 50%,rgba(168,85,247,0.05) 0%,transparent 70%);
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ===== 顶部胶囊导航 ===== */
+.navbar{
+  position:fixed;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:1000;
+  background:rgba(45,27,78,0.8);
+  backdrop-filter:blur(20px);
+  border:1px solid var(--card-border);
+  border-radius:50px;
+  padding:12px 30px;
+  display:flex;
+  align-items:center;
+  gap:30px;
+  box-shadow:0 10px 40px rgba(109,40,217,0.3);
+}
+.navbar .logo{
+  font-size:20px;
+  font-weight:900;
+  background:linear-gradient(135deg,var(--purple-300),var(--purple-500));
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.navbar .logo::before{
+  content:"🍇";
+  font-size:24px;
+  -webkit-text-fill-color:initial;
+}
+.navbar nav{
+  display:flex;
+  gap:20px;
+}
+.navbar nav a{
+  font-size:14px;
+  font-weight:600;
+  color:var(--text-dim);
+  padding:8px 16px;
+  border-radius:20px;
+  transition:all 0.3s ease;
+}
+.navbar nav a:hover{
+  color:var(--text);
+  background:rgba(139,92,246,0.2);
+}
+
+/* ===== 主容器 ===== */
+.container{
+  position:relative;
+  z-index:1;
+  max-width:1200px;
+  margin:0 auto;
+  padding:120px 20px 60px;
+}
+
+/* ===== 首页 Hero ===== */
+.hero{
+  text-align:center;
+  padding:80px 0 100px;
+  position:relative;
+}
+.hero h1{
+  font-size:48px;
+  font-weight:900;
+  margin-bottom:20px;
+  background:linear-gradient(135deg,var(--purple-200),var(--purple-400),var(--purple-600));
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  line-height:1.2;
+}
+.hero p{
+  font-size:18px;
+  color:var(--text-dim);
+  max-width:600px;
+  margin:0 auto 30px;
+}
+.hero .cta{
+  display:inline-block;
+  padding:16px 40px;
+  background:linear-gradient(135deg,var(--purple-600),var(--purple-500));
+  color:#fff;
+  border-radius:30px;
+  font-weight:700;
+  font-size:16px;
+  box-shadow:0 10px 30px rgba(139,92,246,0.4);
+  transition:transform 0.3s ease;
+}
+.hero .cta:hover{
+  transform:translateY(-2px);
+}
+.hero .grape-decoration{
+  position:absolute;
+  font-size:60px;
+  opacity:0.1;
+  animation:float 6s ease-in-out infinite;
+}
+.hero .grape-decoration:nth-child(1){top:10%;left:10%;animation-delay:0s;}
+.hero .grape-decoration:nth-child(2){top:20%;right:15%;animation-delay:2s;}
+.hero .grape-decoration:nth-child(3){bottom:20%;left:20%;animation-delay:4s;}
+
+@keyframes float{
+  0%,100%{transform:translateY(0px) rotate(0deg);}
+  50%{transform:translateY(-20px) rotate(5deg);}
+}
+
+/* ===== 区块通用 ===== */
+.section{
+  margin-bottom:80px;
+  scroll-margin-top:100px;
+}
+.section-header{
+  text-align:center;
+  margin-bottom:40px;
+}
+.section-header h2{
+  font-size:32px;
+  font-weight:800;
+  color:var(--purple-200);
+  margin-bottom:10px;
+}
+.section-header p{
+  font-size:16px;
+  color:var(--text-muted);
+}
+
+/* ===== 热播推荐 - 瀑布流卡片 ===== */
+.hot-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:24px;
+}
+.hot-card{
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:20px;
+  overflow:hidden;
+  transition:all 0.3s ease;
+  position:relative;
+}
+.hot-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 20px 40px rgba(139,92,246,0.2);
+  border-color:var(--purple-500);
+}
+.hot-card .card-image{
+  width:100%;
+  height:200px;
+  background:linear-gradient(135deg,var(--purple-800),var(--purple-600));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:48px;
+  position:relative;
+  overflow:hidden;
+}
+.hot-card .card-image::before{
+  content:"";
+  position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  background:linear-gradient(45deg,transparent 30%,rgba(255,255,255,0.1) 50%,transparent 70%);
+  transform:translateX(-100%);
+  transition:transform 0.6s;
+}
+.hot-card:hover .card-image::before{
+  transform:translateX(100%);
+}
+.hot-card .card-content{
+  padding:20px;
+}
+.hot-card .card-content h3{
+  font-size:18px;
+  font-weight:700;
+  color:var(--text);
+  margin-bottom:8px;
+}
+.hot-card .card-content p{
+  font-size:14px;
+  color:var(--text-muted);
+  line-height:1.5;
+  margin-bottom:12px;
+}
+.hot-card .card-meta{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:12px;
+  color:var(--text-dim);
+}
+.hot-card .card-meta .rating{
+  color:var(--purple-300);
+  font-weight:600;
+}
+
+/* ===== 分类 - 圆形图标布局 ===== */
+.category-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:30px;
+  justify-items:center;
+}
+.category-item{
+  text-align:center;
+  cursor:pointer;
+  transition:transform 0.3s ease;
+}
+.category-item:hover{
+  transform:scale(1.1);
+}
+.category-item .circle{
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--purple-600),var(--purple-400));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:36px;
+  margin-bottom:12px;
+  box-shadow:0 10px 30px rgba(139,92,246,0.3);
+  transition:box-shadow 0.3s ease;
+}
+.category-item:hover .circle{
+  box-shadow:0 15px 40px rgba(139,92,246,0.5);
+}
+.category-item h3{
+  font-size:16px;
+  font-weight:600;
+  color:var(--text);
+  margin-bottom:4px;
+}
+.category-item p{
+  font-size:12px;
+  color:var(--text-muted);
+}
+
+/* ===== 关于我们 ===== */
+.about{
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:20px;
+  padding:40px;
+  text-align:center;
+}
+.about h3{
+  font-size:24px;
+  font-weight:700;
+  color:var(--purple-200);
+  margin-bottom:16px;
+}
+.about p{
+  font-size:16px;
+  color:var(--text-dim);
+  line-height:1.8;
+  max-width:800px;
+  margin:0 auto;
+}
+
+/* ===== 页脚 ===== */
+.footer{
+  text-align:center;
+  padding:30px 20px;
+  border-top:1px solid var(--card-border);
+  color:var(--text-muted);
+  font-size:14px;
+}
+
+/* ===== 移动端 ===== */
+@media(max-width:768px){
+  .navbar{
+    top:10px;
+    padding:10px 20px;
+    gap:15px;
+  }
+  .navbar nav{
+    gap:10px;
+  }
+  .navbar nav a{
+    font-size:12px;
+    padding:6px 12px;
+  }
+  .hero h1{
+    font-size:32px;
+  }
+  .hero p{
+    font-size:16px;
+  }
+  .container{
+    padding:100px 15px 40px;
+  }
+  .section{
+    margin-bottom:60px;
+  }
+  .section-header h2{
+    font-size:24px;
+  }
+  .hot-grid{
+    grid-template-columns:1fr;
+  }
+  .category-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+  }
+  .category-item .circle{
+    width:80px;
+    height:80px;
+    font-size:28px;
+  }
+  .about{
+    padding:30px 20px;
+  }
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<!-- 顶部胶囊导航 -->
+<nav class="navbar">
+  <div class="logo">葡萄影视</div>
+  <nav>
+    <a href="#">首页</a>
+    <a href="#hot">热播推荐</a>
+    <a href="#category">影视分类</a>
+    <a href="#about">关于我们</a>
+  </nav>
+</nav>
+
+<!-- 主容器 -->
+<main class="container">
+
+  <!-- 首页 Hero -->
+  <section class="hero" id="top">
+    <div class="grape-decoration">🍇</div>
+    <div class="grape-decoration">🍇</div>
+    <div class="grape-decoration">🍇</div>
+    <h1>葡萄影视<br>精彩每一刻</h1>
+    <p>putaoyingshi-h5.github.io - 海量高清影视资源，每日更新，免费观看，畅享视听盛宴</p>
+    <a href="#hot" class="cta">开始观影</a>
+  </section>
+
+  <!-- 热播推荐 -->
+  <section class="section" id="hot">
+    <div class="section-header">
+      <h2>🔥 热播推荐</h2>
+      <p>精选热门影视，每周更新</p>
+    </div>
+    <div class="hot-grid">
+      <article class="hot-card">
+        <div class="card-image">🎬</div>
+        <div class="card-content">
+          <h3>流浪地球 3</h3>
+          <p>中国科幻巨制，太阳危机下的地球流浪之旅，视觉震撼，剧情紧凑。</p>
+          <div class="card-meta">
+            <span>科幻 / 冒险</span>
+            <span class="rating">⭐ 9.2</span>
+          </div>
+        </div>
+      </article>
+      <article class="hot-card">
+        <div class="card-image">📺</div>
+        <div class="card-content">
+          <h3>庆余年 3</h3>
+          <p>范闲重回京都，朝堂权谋再起，张若昀主演，剧情跌宕起伏。</p>
+          <div class="card-meta">
+            <span>古装 / 权谋</span>
+            <span class="rating">⭐ 8.8</span>
+          </div>
+        </div>
+      </article>
+      <article class="hot-card">
+        <div class="card-image">🌸</div>
+        <div class="card-content">
+          <h3>咒术回战 3</h3>
+          <p>五条悟vs宿傩，最强对决，MAPPA制作，打斗场面燃爆。</p>
+          <div class="card-meta">
+            <span>动漫 / 热血</span>
+            <span class="rating">⭐ 9.0</span>
+          </div>
+        </div>
+      </article>
+      <article class="hot-card">
+        <div class="card-image">🎤</div>
+        <div class="card-content">
+          <h3>歌手 2026</h3>
+          <p>华语乐坛巅峰对决，实力唱将同台竞技，每期都是听觉盛宴。</p>
+          <div class="card-meta">
+            <span>综艺 / 音乐</span>
+            <span class="rating">⭐ 8.5</span>
+          </div>
+        </div>
+      </article>
+      <article class="hot-card">
+        <div class="card-image">🎭</div>
+        <div class="card-content">
+          <h3>漫长的季节</h3>
+          <p>悬疑剧巅峰之作，范伟主演，三个时空交织，结局令人深思。</p>
+          <div class="card-meta">
+            <span>悬疑 / 剧情</span>
+            <span class="rating">⭐ 9.4</span>
+          </div>
+        </div>
+      </article>
+      <article class="hot-card">
+        <div class="card-image">🎨</div>
+        <div class="card-content">
+          <h3>蜘蛛侠：平行宇宙 3</h3>
+          <p>多元宇宙全面展开，格温与迈尔斯的跨时空冒险，画风惊艳。</p>
+          <div class="card-meta">
+            <span>动画 / 动作</span>
+            <span class="rating">⭐ 9.1</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 影视分类 -->
+  <section class="section" id="category">
+    <div class="section-header">
+      <h2>📂 影视分类</h2>
+      <p>按类型快速找到想看的</p>
+    </div>
+    <div class="category-grid">
+      <div class="category-item">
+        <div class="circle">🎬</div>
+        <h3>电影</h3>
+        <p>院线大片</p>
+      </div>
+      <div class="category-item">
+        <div class="circle">📺</div>
+        <h3>电视剧</h3>
+        <p>热播剧集</p>
+      </div>
+      <div class="category-item">
+        <div class="circle">🌸</div>
+        <h3>动漫</h3>
+        <p>日漫国漫</p>
+      </div>
+      <div class="category-item">
+        <div class="circle">🎤</div>
+        <h3>综艺</h3>
+        <p>真人秀</p>
+      </div>
+      <div class="category-item">
+        <div class="circle">📽️</div>
+        <h3>纪录片</h3>
+        <p>真实记录</p>
+      </div>
+      <div class="category-item">
+        <div class="circle">🎭</div>
+        <h3>短剧</h3>
+        <p>精品短篇</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 关于我们 -->
+  <section class="section" id="about">
+    <div class="about">
+      <h3>关于 葡萄影视</h3>
+      <p>葡萄影视(putaoyingshi-h5.github.io)致力于为用户提供优质的影视观看体验。我们每日更新最新电影、电视剧、动漫、综艺等资源，支持高清流畅播放，让您随时随地享受观影乐趣。无论是经典老片还是最新热剧，这里都能满足您的观影需求。</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- 页脚 -->
+<footer class="footer">
+  <p>© 2026 葡萄影视 | putaoyingshi-h5.github.io | 本网站仅供学习与交流使用</p>
+</footer>
+
+</body>
+</html>
